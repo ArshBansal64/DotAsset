@@ -1,0 +1,16 @@
+/* ServerResponse.css */
+.response-container {
+  position: fixed; /* Stay fixed in the viewport */
+  top: 20px; /* Distance from the top of the page */
+  left: 50%; /* Center horizontally relative to viewport */
+  transform: translateX(-50%); /* Adjust to perfectly center the container */
+  /* Optional styling */
+  background-color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* Optional: ensure it's above other page elements */
+  z-index: 9999;
+}

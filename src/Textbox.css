@@ -1,11 +1,12 @@
 .center-container {
   display: flex;
   justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
+  align-items: flex-end; /* Centers vertically */
   height: 5vh; /* Full viewport height */
+  margin-top: 90vh;
 }
 
 .large-textbox {
   display: flex;
-  width: 300px;
+  width: 500px;
 }

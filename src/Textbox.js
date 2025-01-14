@@ -1,23 +1,49 @@
 import React, { useState } from "react";
 import "./Textbox.css";
+import ServerResponse from "./ServerResponse";
 
 function TextBox() {
   const [inputValue, setInputValue] = useState("");
-  const [submittedValue, setSubmittedValue] = useState("");
+  const [serverResponse, setServerResponse] = useState("Waiting for response");
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  const handleKey = (event) => {
+  const handleKey = async (event) => {
     if (event.key === "Enter") {
-      setSubmittedValue(inputValue);
-      console.log(inputValue);
+      try {
+        const response = await fetch("http://localhost:5001/api/data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: inputValue }),
+        });
+
+        // Parse the JSON from the server
+        const result = await response.json();
+        console.log("Response from server:", result);
+
+        // Update our UI so the user sees the server's response
+        setServerResponse(result.serverMessage);
+
+        // Optional: Clear the textbox after sending
+        setInputValue("");
+      } catch (error) {
+        console.error("Error sending data to the server:", error);
+        // In case of error, show a fallback message
+        setServerResponse("Error: Could not reach server.");
+      }
     }
   };
 
   return (
     <div className="center-container">
+      {/* Always displayed; changes text based on serverResponse */}
+      <ServerResponse message={serverResponse} />
+
+      {/* Input for the user to type messages */}
       <input
         type="text"
         value={inputValue}
