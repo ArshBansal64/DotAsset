@@ -1,0 +1,10 @@
+﻿LABEL,Description,Type,Year
+COUNTY,county,Geography,2000
+STATE,state,Geography,2000
+PL001001,Total population,Variable,2000
+PL001003,Total Population of White race,Variable,2000
+PL001004,Total Population of Black,Variable,2000
+PL001006,Total Population of Asian,Variable,2000
+,,,
+,,,
+,,,

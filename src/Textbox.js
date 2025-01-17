@@ -21,29 +21,26 @@ function TextBox() {
           body: JSON.stringify({ message: inputValue }),
         });
 
-        // Parse the JSON from the server
         const result = await response.json();
         console.log("Response from server:", result);
 
-        // Update our UI so the user sees the server's response
-        setServerResponse(result.serverMessage);
+        if (result.success) {
+          setServerResponse(result.serverMessage);
+        } else {
+          setServerResponse("Error: Could not process your request.");
+        }
 
-        // Optional: Clear the textbox after sending
         setInputValue("");
       } catch (error) {
         console.error("Error sending data to the server:", error);
-        // In case of error, show a fallback message
-        setServerResponse("Error: Could not reach server.");
+        setServerResponse("Error: Could not reach the server.");
       }
     }
   };
 
   return (
     <div className="center-container">
-      {/* Always displayed; changes text based on serverResponse */}
       <ServerResponse message={serverResponse} />
-
-      {/* Input for the user to type messages */}
       <input
         type="text"
         value={inputValue}
