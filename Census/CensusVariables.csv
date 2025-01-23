@@ -5,6 +5,9 @@ PL001001,Total population,Variable,2000
 PL001003,Total Population of White race,Variable,2000
 PL001004,Total Population of Black,Variable,2000
 PL001006,Total Population of Asian,Variable,2000
-,,,
-,,,
-,,,
+COUNTY,county,Geography,2010
+STATE,state,Geography,2010
+P001001,Total population,Variable,2010
+P001003,Total Population of White race,Variable,2010
+P001004,Total Population of Black,Variable,2010
+P001006,Total Population of Asian,Variable,2010

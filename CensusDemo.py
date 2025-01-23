@@ -114,6 +114,44 @@ Ensure your response matches this format exactly.
                 census_data = response.json()
                 print(f"Census API response: {census_data}")
 
+    elif year == 2010:
+        # sample: https://api.census.gov/data/2010/dec/sf1?get=NAME,P001001&for=county:025&in=state:55&key=REDACTED_CENSUS_KEY
+        # sample: (STATE, 55, Total population, PL001001, 2000)
+        if answer[0] == "COUNTY":
+            state_code = answer[1][:2]
+            county_code = answer[1][2:]
+
+            params = {
+                "get": "NAME," + answer[3],
+                "for": f"county:{county_code}",
+                "in": f"state:{state_code}",
+                "key": api_key,
+            }
+
+            response = requests.get(base_url, params=params)
+
+            # Check if the request was successful
+            if response.status_code == 200:
+                census_data = response.json()
+                print(f"Census API response: {census_data}")
+            else:
+                raise Exception(f"Census API Error: {response.status_code}")
+
+        elif answer[0] == "STATE":
+            params = {
+                "get": "NAME," + answer[3],
+                "for": f"state:{answer[1]}",
+                "key": api_key,
+            }
+
+            response = requests.get(base_url, params=params)
+
+            # Check if the request was successful
+            if response.status_code == 200:
+                census_data = response.json()
+                print(f"Census API response: {census_data}")
+
+
     if census_data is None:
         census_data = {"error": "No Census data retrieved"}
 
@@ -131,6 +169,9 @@ Ensure your response matches this format exactly.
 
     final_response = response.choices[0].message.content
     return final_response
+
+    
+
 
 
 if __name__ == "__main__":
