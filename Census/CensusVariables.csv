@@ -11,3 +11,9 @@ P001001,Total population,Variable,2010
 P001003,Total Population of White race,Variable,2010
 P001004,Total Population of Black,Variable,2010
 P001006,Total Population of Asian,Variable,2010
+COUNTY,county,Geography,2020
+STATE,state,Geography,2020
+P1_001N,Total population,Variable,2020
+P1_003N,Total Population of White race,,2020
+P1_004N,Total Population of Black,Variable,2020
+P1_006N,Total Population of Asian,Variable,2020
