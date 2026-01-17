@@ -2,6 +2,7 @@ from openai import OpenAI
 import pandas as pd
 import requests
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 
@@ -9,14 +10,18 @@ csv_path = "Census/CensusVariables.csv"
 data = pd.read_csv(csv_path)
 csv_text = data.to_string(index=False)
 
-# OpenAI Client
-client = OpenAI(api_key="REDACTED_OPENAI_KEY")
+CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
+# OpenAI Client
+if not OPENAI_API_KEY:
+    raise RuntimeError("OPENAI_API_KEY is not set")
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 @app.route('/process', methods=['POST'])
 def process_data():
     data = request.get_json()
-    print("Data received from Node.js:", data)
+    #print("Data received from Node.js:", data)
 
     if "message" in data:
         print(f"message: {data['message']}")
@@ -57,7 +62,7 @@ Ensure your response matches this format exactly.
 
     # Remove parentheses from the answer
     answer = response.choices[0].message.content
-    print(f"Initial GPT response: {answer}")
+    #print(f"Initial GPT response: {answer}")
     if answer[0] == "(" and answer[len(answer) - 1] == ")":
         answer = answer[1:len(answer) - 1]
 
@@ -70,7 +75,9 @@ Ensure your response matches this format exactly.
     answer = answer.split(", ")
 
     # Your unique API key
-    api_key = "REDACTED_CENSUS_KEY"
+    if not CENSUS_API_KEY:
+        raise RuntimeError("CENSUS_API_KEY is not set")
+    api_key = CENSUS_API_KEY
     # Define the base URL for the Census API
     year = int(answer[4])
     base_url = f"https://api.census.gov/data/{str(year)}/dec/pl"
@@ -84,7 +91,7 @@ Ensure your response matches this format exactly.
             state_code = answer[1][:2]
             county_code = answer[1][2:]
 
-            # Sample: https://api.census.gov/data/2000/dec/pl?get=NAME,PL001006&for=county:025&in=state:55&key=REDACTED_CENSUS_KEY
+            # Sample: https://api.census.gov/data/2000/dec/pl?get=NAME,PL001006&for=county:025&in=state:55&key=...
             params = {
                 "get": "NAME," + answer[3],
                 "for": f"county:{county_code}",
@@ -97,7 +104,7 @@ Ensure your response matches this format exactly.
             # Check if the request was successful
             if response.status_code == 200:
                 census_data = response.json()
-                print(f"Census API response: {census_data}")
+                #print(f"Census API response: {census_data}")
             else:
                 raise Exception(f"Census API Error: {response.status_code}")
 
