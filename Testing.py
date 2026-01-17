@@ -2,13 +2,16 @@ from openai import OpenAI
 import pandas as pd
 import requests
 from flask import Flask, request, jsonify
+import os
 
 def get_answer():
 
     answer = ['STATE', '20', 'Total population', 'P1_001N', 2020]
 
+    CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
+    
 
-    api_key = "REDACTED_CENSUS_KEY"
+    api_key = CENSUS_API_KEY
     # Define the base URL for the Census API
     year = int(answer[4])
     base_url = f"https://api.census.gov/data/{str(year)}/dec/pl"
@@ -30,7 +33,6 @@ def get_answer():
 
             response = requests.get(base_url, params=params)
 
-            # Check if the request was successful
             if response.status_code == 200:
                 census_data = response.json()
                 print(f"Census API response: {census_data}")
@@ -46,13 +48,12 @@ def get_answer():
 
             response = requests.get(base_url, params=params)
 
-            # Check if the request was successful
             if response.status_code == 200:
                 census_data = response.json()
                 print(f"Census API response: {census_data}")
 
     elif year == 2010:
-        # sample: https://api.census.gov/data/2010/dec/sf1?get=NAME,P001001&for=county:025&in=state:55&key=REDACTED_CENSUS_KEY
+        # sample: https://api.census.gov/data/2010/dec/sf1?get=NAME,P001001&for=county:025&in=state:55&key=...
         # sample: (STATE, 55, Total population, PL001001, 2000)
         if answer[0] == "COUNTY":
             state_code = answer[1][:2]
