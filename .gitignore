@@ -1,23 +1,79 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# ------------------------
+# Secrets / Environment
+# ------------------------
+.env
+.env.*
+!.env.example
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# ------------------------
+# Dependencies
+# ------------------------
+node_modules/
+.pnp/
+.pnp.js
+
+# ------------------------
+# Python
+# ------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.log
+.venv/
+venv/
+ENV/
+.envrc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage/
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# ------------------------
+# Flask
+# ------------------------
+instance/
+*.sqlite3
+
+# ------------------------
+# Testing
+# ------------------------
+/coverage
+
+# ------------------------
+# Production
+# ------------------------
+/build
+/dist
+
+# ------------------------
+# OS / Editor
+# ------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# ------------------------
+# Logs
+# ------------------------
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+
+# ------------------------
+# Archives
+# ------------------------
+*.zip
+*.tar.gz
