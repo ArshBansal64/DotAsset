@@ -8,13 +8,11 @@ def get_answer():
     answer = ['STATE', '20', 'Total population', 'P1_001N', 2020]
 
 
-    # Your unique API key
     api_key = "REDACTED_CENSUS_KEY"
     # Define the base URL for the Census API
     year = int(answer[4])
     base_url = f"https://api.census.gov/data/{str(year)}/dec/pl"
 
-    # Initialize census_data
     census_data = None
 
     if year == 2000:
@@ -69,7 +67,6 @@ def get_answer():
 
             response = requests.get(base_url, params=params)
 
-            # Check if the request was successful
             if response.status_code == 200:
                 census_data = response.json()
                 print(f"Census API response: {census_data}")
@@ -86,7 +83,6 @@ def get_answer():
             response = requests.get(base_url, params=params)
             
 
-            # Check if the request was successful
             if response.status_code == 200:
                 census_data = response.json()
                 print(f"Census API response: {census_data}")
@@ -108,7 +104,6 @@ def get_answer():
             response = requests.get(base_url, params=params)
             
 
-            # Check if the request was successful
             if response.status_code == 200:
                 census_data = response.json()
                 print(f"Census API response: {census_data}")
@@ -124,7 +119,6 @@ def get_answer():
 
             response = requests.get(base_url, params=params)
 
-            # Check if the request was successful
             if response.status_code == 200:
                 census_data = response.json()
                 print(f"Census API response: {census_data}")
