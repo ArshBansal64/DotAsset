@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# DotAsset
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+DotAsset is an early-stage backend prototype we built while exploring an idea around using LLMs to help analyze public data for investment research. The original goal was to make it easier to pull structured information from sources like the US Census and combine it with natural-language queries.
 
-## Available Scripts
+This repo shows the groundwork: API integrations, data handling, and how an LLM can be used as a decision layer rather than just a chat interface.
 
-In the project directory, you can run:
+The project is intentionally incomplete. It represents an exploration phase, not a finished product.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## What this project does
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+At a high level:
 
-### `npm test`
+- Exposes a small Flask API endpoint
+- Accepts a natural-language query
+- Uses GPT to select relevant Census variables and geography
+- Fetches the corresponding Census data
+- Uses GPT again to help interpret the result
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The core idea was to let the model reason about *what data to fetch*, then let deterministic APIs return the actual numbers.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How it works
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. A request is sent to the Flask server with a user question.
+2. The first GPT call is constrained to return a structured tuple:
+   - Geography
+   - FIPS code
+   - Census variable
+   - Year
+3. The backend uses that output to construct a Census API request.
+4. The raw Census response is passed into a second GPT call to generate a human-readable answer.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+All API keys are loaded through environment variables. No secrets are committed.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Tech stack
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Python
+- Flask
+- OpenAI API
+- US Census API
+- Pandas (for CSV-based variable lookup)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Why this exists
 
-## Learn More
+This repo is not meant to be a polished startup demo.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+It exists to show:
+- How to safely integrate LLMs with real data sources
+- How to constrain model output for downstream automation
+- How to structure a backend that mixes probabilistic and deterministic systems
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+We stopped development early, but the architectural direction is intentional.
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Running locally
 
-### Analyzing the Bundle Size
+1. Copy the example env file:
+   ```
+   cp .env.example .env
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+2. Add your API keys to `.env`
 
-### Making a Progressive Web App
+3. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+4. Start the server:
+   ```
+   python CensusDemo.py
+   ```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Notes
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This code was written quickly during exploration. Some parts are rough by design. If this were continued, the next steps would be better validation, error handling, and a cleaner request/response contract.
