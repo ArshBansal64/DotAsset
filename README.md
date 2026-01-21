@@ -33,7 +33,7 @@ The core idea was to let the model reason about *what data to fetch*, then let d
 3. The backend uses that output to construct a Census API request.
 4. The raw Census response is passed into a second GPT call to generate a human-readable answer.
 
-All API keys are loaded through environment variables. No secrets are committed.
+All API keys are loaded through environment variables.
 
 ---
 
