@@ -4,7 +4,7 @@ DotAsset is an early-stage backend prototype we built while exploring an idea ar
 
 This repo shows the groundwork: API integrations, data handling, and how an LLM can be used as a decision layer rather than just a chat interface.
 
-The project is intentionally incomplete. It represents an exploration phase, not a finished product.
+The project is intentionally incomplete. It represents an experiment on data processing and allowing LLM outputs to be inputs into the pipeline.
 
 ---
 
