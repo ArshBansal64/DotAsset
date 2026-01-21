@@ -83,4 +83,4 @@ We stopped development early, but the architectural direction is intentional.
 
 ## Notes
 
-This code was written quickly during exploration. Some parts are rough by design. If this were continued, the next steps would be better validation, error handling, and a cleaner request/response contract.
+If this plan is continued, the next steps would be better validation, error handling, and a cleaner request/response contract.
