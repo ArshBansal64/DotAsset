@@ -2,9 +2,7 @@
 
 DotAsset is an early-stage backend prototype we built while exploring an idea around using LLMs to help analyze public data for investment research. The original goal was to make it easier to pull structured information from sources like the US Census and combine it with natural-language queries.
 
-This repo shows the groundwork: API integrations, data handling, and how an LLM can be used as a decision layer rather than just a chat interface.
-
-The project is intentionally incomplete. It represents an experiment on data processing and allowing LLM outputs to be inputs into the pipeline.
+This repo shows the groundwork: API integrations, data handling, and how an LLM can be used as a decision layer within the pipeline.
 
 ---
 
